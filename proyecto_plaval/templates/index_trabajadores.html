@@ -1,0 +1,85 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+    <a class="navbar-brand" href="/">Tabla Trabajadores</a>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-md-5">
+        {% with messages = get_flashed_messages() %}
+        {% if messages   %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <div class="card-body">
+            <div class="col-md-4 offset-md-4">
+                <form action="/trabajadores/add_trabajador" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="Rut_trabajador" placeholder="Rut_trabajador"  class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="Nombre" placeholder="Nombre" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="Apellido" placeholder="Apellido" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="Especializacion" placeholder="Especializacion" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="periodo_contrato" placeholder="Periodo_contrato" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="contacto" placeholder="Contacto" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <table class="table table-striped table-bordered bg-white table-sm" >
+            <thead>
+                <td>Rut_trabajador</td>
+                <td>Nombre</td>
+                <td>Apellido</td>
+                <td>Especializacion</td>
+                <td>periodo_contrato</td>
+                <td>contacto</td>
+                <td>Operaciones</td>
+
+            </thead>
+            <tbody>
+                {% for trabajador in trabajadores %}
+                <tr>
+                    <td> {{ trabajador.1 }}</td>
+                    <td> {{ trabajador.2 }}</td>
+                    <td> {{ trabajador.3 }}</td>
+                    <td> {{ trabajador.4 }}</td>
+                    <td> {{ trabajador.5 }}</td>
+                    <td> {{ trabajador.6 }}</td>
+                    <td>
+                        <a href="/trabajadores/edit/{{ trabajador.0 }}" class="btn btn-secondary"> Edit </a>
+                        <a href="/trabajadores/delete/{{ trabajador.0 }}" class="btn btn-danger btn-delete"> Delete </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+
